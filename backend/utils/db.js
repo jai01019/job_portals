@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import dns from "dns";
+
+// Fix for Windows DNS resolution issue with mongodb+srv connection strings
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const connectDB = async () => {
     try {
