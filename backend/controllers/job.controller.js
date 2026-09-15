@@ -30,7 +30,7 @@ export const postJob = async (req, res) => {
             success: true
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 // student k liye
@@ -57,7 +57,7 @@ export const getAllJobs = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 // student
@@ -75,7 +75,7 @@ export const getJobById = async (req, res) => {
         };
         return res.status(200).json({ job, success: true });
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 // admin kitne job create kra hai abhi tk
@@ -96,6 +96,6 @@ export const getAdminJobs = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }

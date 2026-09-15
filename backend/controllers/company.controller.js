@@ -29,7 +29,7 @@ export const registerCompany = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 export const getCompany = async (req, res) => {
@@ -47,7 +47,7 @@ export const getCompany = async (req, res) => {
             success:true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 // get company by id
@@ -66,7 +66,7 @@ export const getCompanyById = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 export const updateCompany = async (req, res) => {
@@ -98,6 +98,6 @@ export const updateCompany = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }

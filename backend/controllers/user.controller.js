@@ -46,7 +46,7 @@ export const register = async (req, res) => {
             success: true
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 export const login = async (req, res) => {
@@ -101,7 +101,7 @@ export const login = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 export const logout = async (req, res) => {
@@ -111,7 +111,7 @@ export const logout = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 export const updateProfile = async (req, res) => {
@@ -171,6 +171,6 @@ export const updateProfile = async (req, res) => {
             success:true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
