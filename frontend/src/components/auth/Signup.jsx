@@ -10,7 +10,7 @@ import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading } from '@/redux/authSlice'
-import { Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 
 const Signup = () => {
 
@@ -22,6 +22,7 @@ const Signup = () => {
         role: "",
         file: ""
     });
+    const [showPassword, setShowPassword] = useState(false);
     const {loading,user} = useSelector(store=>store.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -105,13 +106,23 @@ const Signup = () => {
                     </div>
                     <div className='my-2'>
                         <Label>Password</Label>
-                        <Input
-                            type="password"
-                            value={input.password}
-                            name="password"
-                            onChange={changeEventHandler}
-                            placeholder="patel@gmail.com"
-                        />
+                        <div className='relative'>
+                            <Input
+                                type={showPassword ? "text" : "password"}
+                                value={input.password}
+                                name="password"
+                                onChange={changeEventHandler}
+                                placeholder="********"
+                                className="pr-10"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none'
+                            >
+                                {showPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
+                            </button>
+                        </div>
                     </div>
                     <div className='flex items-center justify-between'>
                         <RadioGroup className="flex items-center gap-4 my-5">

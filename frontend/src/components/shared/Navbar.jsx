@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { setUser } from '@/redux/authSlice'
+import { setCompanies, setSingleCompany } from '@/redux/companySlice'
+import { setAllAdminJobs } from '@/redux/jobSlice'
 import { toast } from 'sonner'
 
 const Navbar = () => {
@@ -20,12 +22,15 @@ const Navbar = () => {
             const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
             if (res.data.success) {
                 dispatch(setUser(null));
+                dispatch(setCompanies([]));
+                dispatch(setSingleCompany(null));
+                dispatch(setAllAdminJobs([]));
                 navigate("/");
                 toast.success(res.data.message);
             }
         } catch (error) {
             console.error(error);
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || "Failed to logout");
         }
     }
     return (

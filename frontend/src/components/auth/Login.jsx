@@ -10,7 +10,9 @@ import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setUser } from '@/redux/authSlice'
-import { Loader2 } from 'lucide-react'
+import { setCompanies } from '@/redux/companySlice'
+import { setAllAdminJobs } from '@/redux/jobSlice'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 
 const Login = () => {
     const [input, setInput] = useState({
@@ -18,6 +20,7 @@ const Login = () => {
         password: "",
         role: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
     const { loading,user } = useSelector(store => store.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -37,6 +40,8 @@ const Login = () => {
                 withCredentials: true,
             });
             if (res.data.success) {
+                dispatch(setCompanies([]));
+                dispatch(setAllAdminJobs([]));
                 dispatch(setUser(res.data.user));
                 navigate("/");
                 toast.success(res.data.message);
@@ -72,13 +77,23 @@ const Login = () => {
 
                     <div className='my-2'>
                         <Label>Password</Label>
-                        <Input
-                            type="password"
-                            value={input.password}
-                            name="password"
-                            onChange={changeEventHandler}
-                            placeholder="patel@gmail.com"
-                        />
+                        <div className='relative'>
+                            <Input
+                                type={showPassword ? "text" : "password"}
+                                value={input.password}
+                                name="password"
+                                onChange={changeEventHandler}
+                                placeholder="********"
+                                className="pr-10"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none'
+                            >
+                                {showPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
+                            </button>
+                        </div>
                     </div>
                     <div className='flex items-center justify-between'>
                         <RadioGroup className="flex items-center gap-4 my-5">

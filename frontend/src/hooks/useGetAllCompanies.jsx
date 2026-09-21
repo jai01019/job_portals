@@ -15,6 +15,7 @@ const useGetAllCompanies = () => {
                 }
             } catch (error) {
                 console.error(error);
+                dispatch(setCompanies([]));
             }
         }
         fetchCompanies();
