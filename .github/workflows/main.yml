@@ -18,6 +18,16 @@ jobs:
           node -v
           npm -v
 
+      - name: Create Backend .env
+        working-directory: backend
+        run: |
+          echo "${{ secrets.JOB_PORTAL_SECRET_BACKEND_ENV }}" > .env
+
+      - name: Create Frontend .env
+        working-directory: frontend
+        run: |
+          echo "${{ secrets.JOB_PORTAL_SECRET_FRONTEND_ENV }}" > .env
+
       - name: Install Backend Dependencies
         working-directory: backend
         run: npm ci
