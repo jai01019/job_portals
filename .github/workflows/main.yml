@@ -1,0 +1,53 @@
+name: Deploy Job Portal to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check Node.js
+        run: |
+          node -v
+          npm -v
+
+      - name: Create Backend .env
+        working-directory: backend
+        run: |
+          echo "${{ secrets.JOB_PORTAL_SECRET_BACKEND_ENV }}" > .env
+
+      - name: Create Frontend .env
+        working-directory: frontend
+        run: |
+          echo "${{ secrets.JOB_PORTAL_SECRET_FRONTEND_ENV }}" > .env
+
+      - name: Install Backend Dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Install Frontend Dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build Frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Deploy Frontend to NGINX
+        run: |
+          sudo rm -rf /var/www/job-portal/*
+          sudo cp -r frontend/dist/* /var/www/job-portal/
+          sudo chown -R www-data:www-data /var/www/job-portal
+
+      - name: Restart Backend with PM2
+        working-directory: backend
+        run: |
+          pm2 restart job-portal-backend || pm2 start index.js --name job-portal-backend
+          pm2 save
