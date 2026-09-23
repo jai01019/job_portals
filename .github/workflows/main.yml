@@ -40,6 +40,12 @@ jobs:
         working-directory: frontend
         run: npm run build
 
+      - name: Deploy Frontend to NGINX
+        run: |
+          sudo rm -rf /var/www/job-portal/*
+          sudo cp -r frontend/dist/* /var/www/job-portal/
+          sudo chown -R www-data:www-data /var/www/job-portal
+
       - name: Restart Backend with PM2
         working-directory: backend
         run: |
